@@ -5,10 +5,10 @@ contract Matrix {
     uint8 private constant SIZE = 10; 
     string[SIZE][SIZE] private matrix;
  
-    constructor(string memory initValue) {
+    constructor() {
         for(uint8 i = 0; i < SIZE; i++){
             for(uint8 j = 0; j < SIZE; j++){
-                matrix[i][j] = initValue;
+                matrix[i][j] = "#ffffff";
             }
         }
     }
