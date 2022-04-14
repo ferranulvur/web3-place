@@ -3,6 +3,27 @@ import GridItem from "./GridItem";
 import { STORAGE_URL } from "../Constants";
 import "./Grid.css";
 
+import Web3 from 'web3';
+import MatrixABI from 'truffle-build/Matrix.json';
+
+let matrixContract;
+let isInitialized = false;
+
+const init = async()=>{
+  let provider = window.ethereum;
+  const web3 = new Web3(provider)
+  const networkId = await web3.eth.net.getId();
+
+  matrixContract = new web3.eth.Contract(
+      MatrixABI.abi, 
+      MatrixABI.networks[networkId].address
+  );
+
+  isInitialized = true;
+  return matrixContract
+
+}
+
 export default class Grid extends Component {
   constructor(props) {
     super(props);
@@ -12,9 +33,22 @@ export default class Grid extends Component {
   }
 
   componentDidMount() {
-    fetch(STORAGE_URL)
+
+    if(!isInitialized){
+      init()
+    }
+
+/*     fetch(STORAGE_URL)
       .then(response => response.json())
-      .then(jsonResponse => this.setState({ drawing: jsonResponse.drawing }));
+      .then(resp => console.log(resp.drawing))
+      .then(jsonResponse => this.setState({ drawing: jsonResponse.drawing })); */
+
+    init().then(matrixContract => {
+      matrixContract.methods
+        .getMatrix()
+        .call()
+        .then(response => this.setState({ drawing: response }))
+    })
   }
 
   render() {

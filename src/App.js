@@ -4,8 +4,12 @@ import Grid from "./components/Grid"
 import ConnectWallet from "./components/wallet/connectWallet"
 import {Button, Container, Navbar, Nav, NavDropdown} from 'react-bootstrap'
 import useMetamask from './hooks/metamask';
+import { init, getPixels } from './hooks/web3Client';
 
 function App() {
+
+  //getPixels();
+  //setInterval(getPixels, 10000);
 
   const { connect, disconnect, isActive, account, shouldDisable } = useMetamask()
 
