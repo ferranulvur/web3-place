@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import GridItem from "./GridItem";
-import { STORAGE_URL } from "../Constants";
 import "./Grid.css";
 
 import Web3 from 'web3';
@@ -47,7 +46,10 @@ export default class Grid extends Component {
       matrixContract.methods
         .getMatrix()
         .call()
-        .then(response => this.setState({ drawing: response }))
+        .then(response =>{
+          this.setState({ drawing: response })
+          console.log(response)
+        })
     })
   }
 
