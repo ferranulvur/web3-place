@@ -2,4 +2,15 @@
   height: 20px;
   margin: 0;
   padding: 0;
+  width: max-content
 }
+
+.artContainer{
+  overflow-y: scroll;
+  overflow-x: scroll;
+  height: 75vh;
+  width: 75vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+

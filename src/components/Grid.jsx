@@ -1,5 +1,11 @@
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
+
 import GridItem from "./GridItem";
+import styled from "styled-components";
+
+
 import "./Grid.css";
 
 import Web3 from 'web3';
@@ -22,6 +28,32 @@ const init = async()=>{
   return matrixContract
 
 }
+const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+`;
+const Box = styled.div`
+  width: 50px;
+  height: 50px;
+  background-color: ${props => (props.backColor ? props.backColor : "blue")};
+  margin: 5px;
+`;
+
+const Toolbox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: calc(100vw - 60px);
+  margin-bottom: 10px;
+  button {
+    margin-left: 10px;
+    width: 2em;
+  }
+`;
 
 export default class Grid extends Component {
   constructor(props) {
@@ -52,6 +84,7 @@ export default class Grid extends Component {
         })
     })
   }
+  
 
   render() {
     if (!this.state.drawing) {
@@ -69,11 +102,28 @@ export default class Grid extends Component {
     }
 
     return (
-      <div>
-        {gridItems.map(rowItem => {
-          return <div className="GridRow">{rowItem}</div>;
-        })}
-      </div>
+      <TransformWrapper
+      defaultScale={0.5}
+      defaultPositionX={200}
+      defaultPositionY={100}
+      >
+        {({ zoomIn, zoomOut, resetTransform, positionX, positionY, ...rest }) => (
+          <React.Fragment>
+            <Toolbox>
+              <button onClick={zoomIn}>+</button>
+              <button onClick={zoomOut}>-</button>
+              <button onClick={resetTransform}>x</button>
+            </Toolbox>
+            <div className="artContainer">
+            <TransformComponent>
+                {gridItems.map(rowItem => {
+                  return <div className="GridRow">{rowItem}</div>;
+                })}
+            </TransformComponent>
+            </div>
+          </React.Fragment>
+        )}
+      </TransformWrapper>
     );
   }
 }

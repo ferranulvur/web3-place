@@ -14,7 +14,7 @@ function App() {
   const { connect, disconnect, isActive, account, shouldDisable } = useMetamask()
 
   return (
-    <div className="App pb-5" style={{backgroundColor: "#464c65"}}>
+    <div className="App" style={{backgroundColor: "#464c65"}}>
       <Navbar variant="dark" style={{backgroundColor: "#464c65"}}>
         <Container>
           <Navbar.Brand href="#home">
@@ -38,6 +38,9 @@ function App() {
       </Navbar>
 
       <Grid />
+
+      <Navbar variant="dark" style={{backgroundColor: "#464c65"}}>
+      </Navbar>
     </div>
   );
 }
